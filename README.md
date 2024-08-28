@@ -5,7 +5,7 @@ SDFlowLayout is a fluid FlowLayout created with SwiftUI. This package is designe
 
 ## Requirements
 
-iOS 14.0
+iOS 14.0  
 macOS 11.0  
 
 ## Features
