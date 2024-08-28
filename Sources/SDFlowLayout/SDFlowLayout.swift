@@ -16,7 +16,7 @@ public struct SDFlowLayout<Content: View, Data : RandomAccessCollection, ID : Ha
     
     @State private var viewHeight = CGFloat.zero
     
-    var body: some View {
+    public var body: some View {
         GeometryReader { geometry in
             self.generateHashtagViews(g: geometry, totalHeight: $viewHeight)
         }
