@@ -96,7 +96,7 @@ class ContentVM: ObservableObject {
     ]
 }
 ```
-<img src="./Resources/Sample.png" width="400px" height="200px"/>
+<img src="./Resources/Sample.png" width="400px" height="800px"/>
 
 ### Parameters
 - data: The collection of data to display.
