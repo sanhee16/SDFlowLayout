@@ -4,26 +4,21 @@
 import Foundation
 import SwiftUI
 
-public struct SDFlowLayout<Content: View, Data : RandomAccessCollection, ID : Hashable>: View where Data.Element: Equatable{
+public struct FlowLayout<Content: View, Data : RandomAccessCollection, ID : Hashable>: View where Data.Element: Equatable{
     var data: Data
     var id: KeyPath<Data.Element, ID>
     var content: (Data.Element) -> Content
-    
-    var viewBackground: Color = Color.white
-    var cloudBackground: Color = Color.gray
-    var font: Font = Font.body
-    var action: (String) -> ()
     
     @State private var viewHeight = CGFloat.zero
     
     public var body: some View {
         GeometryReader { geometry in
-            self.generateHashtagViews(g: geometry, totalHeight: $viewHeight)
+            self.generateContents(g: geometry, totalHeight: $viewHeight)
         }
         .frame(height: viewHeight, alignment: .leading)
     }
     
-    private func generateHashtagViews(g: GeometryProxy, totalHeight: Binding<CGFloat>) -> some View {
+    private func generateContents(g: GeometryProxy, totalHeight: Binding<CGFloat>) -> some View {
         var width = CGFloat.zero
         var height = CGFloat.zero
         
