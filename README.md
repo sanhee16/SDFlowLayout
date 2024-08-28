@@ -26,8 +26,7 @@ dependencies: [
 ]
 /// ...
 ```
-
-## Usage  
+ 
 ## Usage  
 
 Here’s a simple example of how to use SDFlowLayout:
