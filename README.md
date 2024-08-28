@@ -35,19 +35,69 @@ Here’s a simple example of how to use SDFlowLayout:
 import SwiftUI
 import SDFlowLayout
 
-struct ContentView: View {
-    let items = ["Item 1", "Item 2", "Item 3", "Item 4"]
 
+struct ContentView: View {
+    private let colors: [Color] = [.red, .blue, .green, .orange, .pink, .yellow, .gray, .purple]
+    @StateObject private var vm: ContentVM = ContentVM()
+    
     var body: some View {
-        SDFlowLayout(data: items, id: \.self) { item in
-            Text(item)
-                .padding()
-                .background(Color.blue)
-                .cornerRadius(5)
+        VStack {
+            SDFlowLayout(data: vm.items1, id: \.self) { item in
+                Text(item)
+                    .padding()
+                    .background(
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundColor(self.colors.randomElement()?.opacity(0.5))
+                    )
+                    .padding(.trailing, 5)
+            }
+            
+            Divider()
+                .padding(.vertical, 30)
+            
+            SDFlowLayout(data: vm.items2, id: \.self) { item in
+                peopleView(item)
+                    .padding(.trailing, 5)
+            }
         }
+        .padding()
+    }
+    
+    private func peopleView(_ item: People) -> some View {
+        HStack(alignment: .center, spacing: 0, content: {
+            Text("\(item.name)")
+                .padding(.trailing, 10)
+            Text(item.grade)
+        })
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 8)
+                .foregroundColor(self.colors.randomElement()?.opacity(0.5))
+        )
     }
 }
+
+struct People: Equatable, Hashable {
+    var name: String
+    var age: Int
+    var grade: String
+}
+
+class ContentVM: ObservableObject {
+    @Published var items1: [String] = ["Mercury",  "Venus", "Earth", "Mars", "Jupiter",  "Saturn", "Uranus", "Neptune", "Pluto"]
+    @Published var items2: [People] = [
+        People(name: "Sandy", age: 24, grade: "A"),
+        People(name: "Tom", age: 24, grade: "B-"),
+        People(name: "Ruby", age: 24, grade: "A+"),
+        People(name: "Jane", age: 24, grade: "C+"),
+        People(name: "Mike", age: 24, grade: "C-"),
+        People(name: "Teddy", age: 24, grade: "D+"),
+        People(name: "Mat", age: 24, grade: "B+"),
+    ]
+}
 ```
+<img src="./Resources/Sample.png" width="400px" height="200px"/>
+
 ### Parameters
 - data: The collection of data to display.
 - id: A key path to identify each data item.
