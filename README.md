@@ -102,10 +102,6 @@ class ContentVM: ObservableObject {
 - data: The collection of data to display.
 - id: A key path to identify each data item.
 - content: A closure that generates a view for each data item.
-- viewBackground: The background color of the view (default: white).
-- cloudBackground: The cloud background color (default: gray).
-- font: The font for the text (default: body font).
-- action: A closure to perform a specific action.
 
 
 ## Contributing
