@@ -98,7 +98,7 @@ class ContentVM: ObservableObject {
 <img src="./Resources/Sample.png" width="400px" height="800px"/>   
 
 Do you want to create a hashtag view? You can do it!
-```
+```swift
 internal struct ContentView: View {
     @State private var tags: [String] = ["Mercury",  "Venus", "Earth", "Mars", "Jupiter",  "Saturn", "Uranus", "Neptune", "Pluto"]
     
@@ -130,6 +130,7 @@ internal struct ContentView: View {
         }
         .padding(3)
     }
+}
 ```
 <img src="./Resources/ContentView.png" width="340px" height="800px"/>  
 
