@@ -4,7 +4,7 @@
 import Foundation
 import SwiftUI
 
-public struct SDFlowLayout<Content: View, Data : RandomAccessCollection, ID : Hashable>: View where Data.Element: Equatable{
+public struct SDFlowLayout<Content: View, Data : RandomAccessCollection, ID : Hashable>: View where Data.Element: Equatable {
     var data: Data
     var id: KeyPath<Data.Element, ID>
     var content: (Data.Element) -> Content

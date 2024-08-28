@@ -93,12 +93,28 @@ internal struct ContentView: View {
         Student(name: "Jude", age: 27, grade: "A"),
         Student(name: "Tara", age: 37, grade: "C+"),
     ]
+    @State private var tags: [String] = ["Mercury",  "Venus", "Earth", "Mars", "Jupiter",  "Saturn", "Uranus", "Neptune", "Pluto"]
     
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             ScrollView(.vertical) {
                 VStack(alignment: .leading, spacing: 0, content: {
-                    Text("Test1")
+                    Text("HashTag")
+                        .font(.headline)
+                        .padding(.bottom, 10)
+                    
+                    SDFlowLayout(data: $tags.wrappedValue.indices, id: \.self) { idx in
+                        hashTagItem($tags.wrappedValue[idx], onTapDelete: {
+                            $tags.wrappedValue.remove(at: idx)
+                        })
+                        .padding([.trailing, .bottom], 5)
+                    }
+                })
+                .padding()
+                
+                
+                VStack(alignment: .leading, spacing: 0, content: {
+                    Text("String")
                         .font(.headline)
                         .padding(.bottom, 10)
                     SDFlowLayout(data: self.items1, id: \.self) { item in
@@ -115,7 +131,7 @@ internal struct ContentView: View {
                 
                 Divider()
                 VStack(alignment: .leading, spacing: 0, content: {
-                    Text("Test2")
+                    Text("Structure")
                         .font(.headline)
                         .padding(.bottom, 10)
                     SDFlowLayout(data: self.items2, id: \.self) { item in
@@ -137,6 +153,24 @@ internal struct ContentView: View {
                 .padding()
             }
         }
+    }
+    
+    private func hashTagItem(_ text: String, onTapDelete: @escaping ()->()) -> some View {
+        HStack(alignment: .center, spacing: 0) {
+            Text("#")
+            Text(text)
+                .padding(.trailing, 4)
+//            Image(systemName: "xmark")
+//                .font(.system(size: 14))
+//                .onTapGesture {
+//                    onTapDelete()
+//                }
+        }
+        .padding(3)
+//        .background(
+//            RoundedRectangle(cornerRadius: 4)
+//                .foregroundColor(self.colors.randomElement()?.opacity(0.3))
+//        )
     }
 }
 
