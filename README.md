@@ -95,7 +95,45 @@ class ContentVM: ObservableObject {
     ]
 }
 ```
-<img src="./Resources/Sample.png" width="400px" height="800px"/> <img src="./Resources/ContentView.png" width="400px" height="800px"/>
+<img src="./Resources/Sample.png" width="400px" height="800px"/>   
+
+Do you want to create a hashtag view? You can do it!
+```
+internal struct ContentView: View {
+    @State private var tags: [String] = ["Mercury",  "Venus", "Earth", "Mars", "Jupiter",  "Saturn", "Uranus", "Neptune", "Pluto"]
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            ScrollView(.vertical) {
+                VStack(alignment: .leading, spacing: 0, content: {
+                    Text("HashTag")
+                        .font(.headline)
+                        .padding(.bottom, 10)
+                    
+                    SDFlowLayout(data: $tags.wrappedValue.indices, id: \.self) { idx in
+                        hashTagItem($tags.wrappedValue[idx], onTapDelete: {
+                            $tags.wrappedValue.remove(at: idx)
+                        })
+                        .padding([.trailing, .bottom], 5)
+                    }
+                })
+                .padding()
+            }
+        }
+    }
+    
+    private func hashTagItem(_ text: String, onTapDelete: @escaping ()->()) -> some View {
+        HStack(alignment: .center, spacing: 0) {
+            Text("#")
+            Text(text)
+                .padding(.trailing, 4)
+        }
+        .padding(3)
+    }
+```
+<img src="./Resources/ContentView.png" width="340px" height="800px"/>  
+
+An example is available in ContentView!  
 
 ### Parameters
 - data: The collection of data to display.
