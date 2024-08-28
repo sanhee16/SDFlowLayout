@@ -4,12 +4,19 @@
 import Foundation
 import SwiftUI
 
-public struct FlowLayout<Content: View, Data : RandomAccessCollection, ID : Hashable>: View where Data.Element: Equatable{
+public struct SDFlowLayout<Content: View, Data : RandomAccessCollection, ID : Hashable>: View where Data.Element: Equatable{
     var data: Data
     var id: KeyPath<Data.Element, ID>
     var content: (Data.Element) -> Content
     
     @State private var viewHeight = CGFloat.zero
+    
+    public init(data: Data, id: KeyPath<Data.Element, ID>, content: @escaping (Data.Element) -> Content) {
+        self.data = data
+        self.id = id
+        self.content = content
+        self.viewHeight = viewHeight
+    }
     
     public var body: some View {
         GeometryReader { geometry in
