@@ -32,7 +32,7 @@ public struct SDFlowLayout<Content: View, Data : RandomAccessCollection, ID : Ha
         return ZStack(alignment: .topLeading) {
             ForEach(data, id: id) { item in
                 content(item)
-                    .padding([.leading, .vertical], 4)
+//                    .padding([.leading, .vertical], 4)
                     .alignmentGuide(.leading, computeValue: { d in
                         if(abs(width - d.width) > g.size.width){
                             width = 0
