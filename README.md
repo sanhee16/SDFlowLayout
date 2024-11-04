@@ -1,11 +1,11 @@
  # SDFlowLayout
-
+### SwiftUI Flow Layout  
 SDFlowLayout is a fluid FlowLayout created with SwiftUI. This package is designed for iOS 14 and allows you to easily implement a GridView with flexible widths.
 
 
 ## Requirements
 
-iOS 14.0
+iOS 14.0  
 macOS 11.0  
 
 ## Features
@@ -26,8 +26,7 @@ dependencies: [
 ]
 /// ...
 ```
-
-## Usage  
+ 
 ## Usage  
 
 Here’s a simple example of how to use SDFlowLayout:
@@ -96,16 +95,51 @@ class ContentVM: ObservableObject {
     ]
 }
 ```
-<img src="./Resources/Sample.png" width="400px" height="200px"/>
+<img src="./Resources/Sample.png" width="400px" height="800px"/>   
+
+Do you want to create a hashtag view? You can do it!
+```swift
+internal struct ContentView: View {
+    @State private var tags: [String] = ["Mercury",  "Venus", "Earth", "Mars", "Jupiter",  "Saturn", "Uranus", "Neptune", "Pluto"]
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            ScrollView(.vertical) {
+                VStack(alignment: .leading, spacing: 0, content: {
+                    Text("HashTag")
+                        .font(.headline)
+                        .padding(.bottom, 10)
+                    
+                    SDFlowLayout(data: $tags.wrappedValue.indices, id: \.self) { idx in
+                        hashTagItem($tags.wrappedValue[idx], onTapDelete: {
+                            $tags.wrappedValue.remove(at: idx)
+                        })
+                        .padding([.trailing, .bottom], 5)
+                    }
+                })
+                .padding()
+            }
+        }
+    }
+    
+    private func hashTagItem(_ text: String, onTapDelete: @escaping ()->()) -> some View {
+        HStack(alignment: .center, spacing: 0) {
+            Text("#")
+            Text(text)
+                .padding(.trailing, 4)
+        }
+        .padding(3)
+    }
+}
+```
+<img src="./Resources/ContentView.png" width="340px" height="800px"/>  
+
+An example is available in ContentView!  
 
 ### Parameters
 - data: The collection of data to display.
 - id: A key path to identify each data item.
 - content: A closure that generates a view for each data item.
-- viewBackground: The background color of the view (default: white).
-- cloudBackground: The cloud background color (default: gray).
-- font: The font for the text (default: body font).
-- action: A closure to perform a specific action.
 
 
 ## Contributing

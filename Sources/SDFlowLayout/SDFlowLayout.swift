@@ -4,7 +4,7 @@
 import Foundation
 import SwiftUI
 
-public struct SDFlowLayout<Content: View, Data : RandomAccessCollection, ID : Hashable>: View where Data.Element: Equatable{
+public struct SDFlowLayout<Content: View, Data : RandomAccessCollection, ID : Hashable>: View where Data.Element: Equatable {
     var data: Data
     var id: KeyPath<Data.Element, ID>
     var content: (Data.Element) -> Content
@@ -20,53 +20,49 @@ public struct SDFlowLayout<Content: View, Data : RandomAccessCollection, ID : Ha
     
     public var body: some View {
         GeometryReader { geometry in
-            self.generateContents(g: geometry, totalHeight: $viewHeight)
+            self.generateContents(geometry: geometry, totalHeight: $viewHeight)
         }
         .frame(height: viewHeight, alignment: .leading)
     }
     
-    private func generateContents(g: GeometryProxy, totalHeight: Binding<CGFloat>) -> some View {
+    private func generateContents(geometry: GeometryProxy, totalHeight: Binding<CGFloat>) -> some View {
         var width = CGFloat.zero
         var height = CGFloat.zero
         
         return ZStack(alignment: .topLeading) {
             ForEach(data, id: id) { item in
                 content(item)
-//                    .padding([.leading, .vertical], 4)
-                    .alignmentGuide(.leading, computeValue: { d in
-                        if(abs(width - d.width) > g.size.width){
+                    .alignmentGuide(.leading, computeValue: { dimensions in
+                        if(abs(width - dimensions.width) > geometry.size.width) {
                             width = 0
-                            height -= d.height
+                            height -= dimensions.height
                         }
                         let result = width
                         if item == self.data.last! {
                             width = 0
                         } else {
-                            width -= d.width
+                            width -= dimensions.width
                         }
                         return result
                     })
-                    .alignmentGuide(.top, computeValue: { d in
+                    .alignmentGuide(.top, computeValue: { _ in
                         let result = height
                         if item == self.data.last! {
                             height = 0
                         }
+                        totalHeight.wrappedValue += result
                         return result
                     })
             }
-            .onChange(of: height, perform: { value in
-                totalHeight.wrappedValue += height
-            })
-        }.background(getViewHeight($viewHeight))
-    }
-    
-    private func getViewHeight(_ binding: Binding<CGFloat>) -> some View {
-        return GeometryReader { geo -> Color in
-            let rect = geo.frame(in: .local)
-            DispatchQueue.main.async {
-                binding.wrappedValue = rect.size.height
-            }
-            return .clear
         }
+        .background(
+            GeometryReader { geometry -> Color in
+                let rect = geometry.frame(in: .local)
+                DispatchQueue.main.async {
+                    $viewHeight.wrappedValue = rect.size.height
+                }
+                return .clear
+            }
+        )
     }
 }
