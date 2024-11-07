@@ -137,9 +137,9 @@ internal struct ContentView: View {
 An example is available in ContentView!  
 
 ### Parameters
-- data: The collection of data to display.
-- id: A key path to identify each data item.
-- content: A closure that generates a view for each data item.
+- `data`: The collection of data to display.
+- `id`: A key path to identify each data item.
+- `content`: A closure that generates a view for each data item.
 
 
 ## Contributing
